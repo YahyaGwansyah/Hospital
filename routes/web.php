@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -18,3 +20,10 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
+
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
