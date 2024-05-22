@@ -22,7 +22,7 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{ asset('adminn/dist/assets/css/style.css') }}">
-
+    
 
 
 </head>
