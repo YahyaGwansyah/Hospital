@@ -18,11 +18,13 @@
     <meta name="keywords" content="">
     <meta name="author" content="Phoenixcoded" />
     <!-- Favicon icon -->
+
     <link rel="icon" href="{{ asset('adminn/dist/assets/images/hospitalcenter.png')}}" type="image/x-icon">
+
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{ asset('adminn/dist/assets/css/style.css') }}">
-
+    
 
 
 </head>
