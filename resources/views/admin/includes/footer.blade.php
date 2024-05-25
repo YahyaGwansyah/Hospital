@@ -56,7 +56,7 @@
 
 
 <!-- custom-chart js -->
-<script src="{{ asset('adminn/dist/assets/js/pages/dashboard-main.js')}}"></script>
+{{-- <script src="{{ asset('adminn/dist/assets/js/pages/dashboard-main.js')}}"></script> --}}
 </body>
 
 </html>
