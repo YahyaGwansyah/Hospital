@@ -6,12 +6,19 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(){
+
+    public function index()
+    {
         $data = [
-            'title'         => 'Dashboard',
-            // 'contoh'        => User::count(),
-            'content'       => 'dashboard/index',
+            'title' => 'Dashboard',
+            'breadcrumbs' => [
+                // 'Category' => "#",
+            ],
+            // 'defaultCategories' => $defaultCategories,
+            // 'customCategories' => $customCategories,
+            'content' => 'dashboard.index',
         ];
-        return view("admin.layouts.wrapper", $data);
+
+        return view("admin.wrapper", $data);
     }
 }
