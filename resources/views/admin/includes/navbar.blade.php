@@ -13,7 +13,9 @@
 
 				<div class="">
 					<div class="main-menu-header">
-						<img class="img-radius" src="{{ asset('adminn/dist/assets/images/user/avatar-2.jpg') }}" alt="User-Profile-Image">
+
+						<img class="img-radius" src="{{ asset('adminn/dist/assets/images/user/avatar-2.jpg')}}" alt="User-Profile-Image">
+            
 						<div class="user-details">
 							<span>John Doe</span>
 							<div id="more-details">UX Designer<i class="fa fa-chevron-down m-l-5"></i></div>
@@ -98,7 +100,7 @@
 
 				</ul>
 
-				<div class="card text-center">
+				{{-- <div class="card text-center">
 					<div class="card-block">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<i class="feather icon-sunset f-40"></i>
@@ -106,7 +108,7 @@
 						<p>Please contact us on our email for need any support</p>
 						<a href="https://1.envato.market/PgJNQ" target="_blank" class="btn btn-primary btn-sm text-white m-0">Upgrade</a>
 					</div>
-				</div>
+				</div> --}}
 
 			</div>
 		</div>
@@ -120,8 +122,8 @@
 					<a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
 					<a href="#!" class="b-brand">
 						<!-- ========   change your logo hear   ============ -->
-						<img src="assets/images/logo.png" alt="" class="logo">
-						<img src="assets/images/logo-icon.png" alt="" class="logo-thumb">
+						<img src="{{ asset('adminn/dist/assets/images/logo.png')}}" alt="" class="logo">
+						<img src="{{ asset('adminn/dist/assets/images/logo-icon.png')}}" alt="" class="logo-thumb">
 					</a>
 					<a href="#!" class="mob-toggler">
 						<i class="feather icon-more-vertical"></i>
@@ -227,7 +229,7 @@
 										</li>
 										<li class="notification">
 											<div class="media">
-												<img class="img-radius" src="assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+												<img class="img-radius" src="{{ asset('adminn/dist/assets/images/user/avatar-1.jpg')}}" alt="Generic placeholder image">
 												<div class="media-body">
 													<p><strong>John Doe</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>5 min</span></p>
 													<p>New ticket Added</p>
@@ -239,7 +241,7 @@
 										</li>
 										<li class="notification">
 											<div class="media">
-												<img class="img-radius" src="assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+												<img class="img-radius" src="{{ asset('adminn/dist/assets/images/user/avatar-2.jpg')}}" alt="Generic placeholder image">
 												<div class="media-body">
 													<p><strong>Joseph William</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>10 min</span></p>
 													<p>Prchace New Theme and make payment</p>
@@ -248,7 +250,7 @@
 										</li>
 										<li class="notification">
 											<div class="media">
-												<img class="img-radius" src="assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+												<img class="img-radius" src="{{ asset('adminn/dist/assets/images/user/avatar-1.jpg')}}" alt="Generic placeholder image">
 												<div class="media-body">
 													<p><strong>Sara Soudein</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>12 min</span></p>
 													<p>currently login</p>
@@ -257,7 +259,7 @@
 										</li>
 										<li class="notification">
 											<div class="media">
-												<img class="img-radius" src="assets/images/user/avatar-2.jpg" alt="Generic placeholder image">
+												<img class="img-radius" src="{{ asset('adminn/dist/assets/images/user/avatar-2.jpg')}}" alt="Generic placeholder image">
 												<div class="media-body">
 													<p><strong>Joseph William</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>30 min</span></p>
 													<p>Prchace New Theme and make payment</p>
@@ -278,7 +280,7 @@
 								</a>
 								<div class="dropdown-menu dropdown-menu-right profile-notification">
 									<div class="pro-head">
-										<img src="assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image">
+										<img src="{{ asset('adminn/dist/assets/images/user/avatar-1.jpg" class="img-radius')}}" alt="User-Profile-Image">
 										<span>John Doe</span>
 										<a href="auth-signin.html" class="dud-logout" title="Logout">
 											<i class="feather icon-log-out"></i>
