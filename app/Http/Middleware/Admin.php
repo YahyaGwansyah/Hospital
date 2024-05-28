@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Illuminate\Support\Facades\Auth;
 
+
 class Admin
 {
     /**
@@ -20,7 +21,6 @@ class Admin
         if (Auth::user()->usertype != 'admin') {
             return redirect('/');
         }
-
         return $next($request);
     }
 }
