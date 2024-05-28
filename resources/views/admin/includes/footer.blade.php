@@ -52,11 +52,13 @@
     <script src="{{ asset('adminn/dist/assets/js/pcoded.min.js') }}"></script>
     {{ asset('adminn/dist/assets/js/pages/dashboard-main.js') }}
 <!-- Apex Chart -->
+
 <script src="{{ asset('adminn/dist/assets/js/plugins/apexcharts.min.js') }}"></script>
 
 
 <!-- custom-chart js -->
 <script src="{{ asset('adminn/dist/assets/js/pages/dashboard-main.js') }}"></script>
+
 </body>
 
 </html>

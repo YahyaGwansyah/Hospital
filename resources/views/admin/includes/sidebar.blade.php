@@ -459,7 +459,7 @@
                         <div class="review-block">
                             <div class="row">
                                 <div class="col-sm-auto p-r-0">
-                                    <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius profile-img cust-img m-b-15">
+                                    <img src="{{ asset('adminn/dist/assets/images/user/avatar-2.jpg" alt="user image')}}" class="img-radius profile-img cust-img m-b-15">
                                 </div>
                                 <div class="col">
                                     <h6 class="m-b-15">John Deo <span class="float-right f-13 text-muted"> a week ago</span></h6>
