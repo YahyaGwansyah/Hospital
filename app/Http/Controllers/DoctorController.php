@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -13,12 +14,12 @@ class DoctorController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'admin.doctors',
+            'title' => 'Doctors',
             'breadcrumbs' => [
                 // 'Category' => "#",
             ],
             'doctors' => Doctor::all(),
-            'content' => 'admin.Doctors.index',
+            'content' => 'admin.doctors.index',
         ];
 
         return view("admin.wrapper", $data);
@@ -29,12 +30,14 @@ class DoctorController extends Controller
      */
     public function create()
     {
+        $users = User::all();
         $data = [
-            'title' => 'admin.Create Doctor',
+            'title' => 'Create Doctor',
             'breadcrumbs' => [
                 'Doctors' => route('doctors.index'),
                 'Create' => "#",
             ],
+            'users' => $users,
             'content' => 'admin.doctors.create',
         ];
 
@@ -46,15 +49,17 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'specialization' => 'required',
-            'phone' => 'required',
-            'available_times' => 'required'
+            'name' => 'required|string|max:255',
+            'specialization' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'available_times' => 'required|string|max:255',
         ]);
-        Doctor::create($request->all());
-        return redirect()->route('doctors.index')->with('success', 'Doctor created successfully.');
 
+        Doctor::create($validatedData);
+
+        return redirect()->route('doctors.index')->with('success', 'Doctor added successfully.');
     }
 
     /**
@@ -70,13 +75,15 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
+        $users = User::all();
         $data = [
-            'title' => 'admin.Doctor Edit',
+            'title' => 'Edit Doctor',
             'breadcrumbs' => [
-                'Doctor' => route('admin.doctors.index'),
+                'Doctors' => route('doctors.index'),
                 'Edit' => "#",
             ],
             'doctor' => $doctor,
+            'users' => $users,
             'content' => 'admin.doctors.edit',
         ];
 
@@ -88,12 +95,15 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        $request->validate([
-            'specialization' => 'required',
-            'phone' => 'required',
-            'available_times' => 'required'
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'specialization' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'available_times' => 'required|string|max:255',
         ]);
-        $doctor->update($request->all());
+
+        $doctor->update($validatedData);
+
         return redirect()->route('doctors.index')->with('success', 'Doctor updated successfully.');
     }
 
@@ -106,4 +116,3 @@ class DoctorController extends Controller
         return redirect()->route('doctors.index')->with('success', 'Doctor deleted successfully.');
     }
 }
-

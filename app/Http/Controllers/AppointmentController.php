@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Models\Patient;
+use App\Models\Doctor;
+use App\Models\Room;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
 {
@@ -13,7 +17,7 @@ class AppointmentController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'admin.Appointments',
+            'title' => 'Appointments',
             'breadcrumbs' => [
                 // 'Category' => "#",
             ],
@@ -29,12 +33,20 @@ class AppointmentController extends Controller
      */
     public function create()
     {
+        $patients = Patient::all();
+        $doctors = Doctor::all();
+        $rooms = Room::all();
+
         $data = [
-            'title' => 'admin.Create Appointment',
+            'title' => 'Create Appointment',
             'breadcrumbs' => [
+                // 'Category' => "#",
                 'Appointments' => route('appointments.index'),
                 'Create' => "#",
             ],
+            'patients' => $patients,
+            'doctors' => $doctors,
+            'rooms' => $rooms,
             'content' => 'admin.appointments.create',
         ];
 
@@ -46,15 +58,22 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'patient_id' => 'required|exists:patients,id',
             'doctor_id' => 'required|exists:doctors,id',
-            'appointment_date' => 'required|date',
-            'status' => 'required',
-            'room_id' => 'nullable|exists:rooms,id'
+            'room_id' => 'nullable|exists:rooms,id',
+            'date' => 'required|date',
+            'status' => 'required'
         ]);
-        Appointment::create($request->all());
-        return redirect()->route('appointments.index')->with('success', 'Appointment created successfully.');
+
+        $appointment = Appointment::create($data);
+
+        if ($appointment) {
+            return redirect()->route('appointments.index')->with('success', 'Appointment created successfully.');
+        } else {
+            return back()->with('error', 'Failed to create appointment.');
+        }
+
     }
 
     /**
@@ -70,14 +89,22 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
+        $patients = Patient::all();
+        $doctors = Doctor::all();
+        $rooms = Room::all();
+
         $data = [
-            'title' => 'admin.Edit Appointment',
+            'title' => 'Edit Appointment',
             'breadcrumbs' => [
-                'Appointments' => route('admin.appointments.index'),
+                // 'Category' => "#",
+                'Appointments' => route('appointments.index'),
                 'Edit' => "#",
             ],
             'appointment' => $appointment,
-            'content' => 'admin.patients.edit',
+            'patients' => $patients,
+            'doctors' => $doctors,
+            'rooms' => $rooms,
+            'content' => 'admin.appointments.edit',
         ];
 
         return view("admin.wrapper", $data);
@@ -91,13 +118,16 @@ class AppointmentController extends Controller
         $request->validate([
             'patient_id' => 'required|exists:patients,id',
             'doctor_id' => 'required|exists:doctors,id',
-            'appointment_date' => 'required|date',
+            'date' => 'required|date',
             'status' => 'required',
             'room_id' => 'nullable|exists:rooms,id'
         ]);
+
         $appointment->update($request->all());
+
         return redirect()->route('appointments.index')->with('success', 'Appointment updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

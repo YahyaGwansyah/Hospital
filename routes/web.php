@@ -4,7 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HealthInformationController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PaymentController;
@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('queues', QueueController::class);
     Route::resource('medical_records', MedicalRecordController::class);
     Route::resource('payments', PaymentController::class);
+    Route::resource('health_informations', HealthInformationController::class);
 });
 
 

@@ -4,8 +4,17 @@
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="user_id">User ID</label>
-            <input type="text" name="user_id" class="form-control" value="{{ $patient->user_id }}" required>
+            <label for="user_id">User</label>
+            <select name="user_id" class="form-control" required>
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}" {{ $patient->user_id == $user->id ? 'selected' : '' }}>
+                        {{ $user->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" value="{{ $patient->name }}" required>
         </div>
         <div class="form-group">
             <label for="address">Address</label>
@@ -26,6 +35,6 @@
                 <option value="female" {{ $patient->gender == 'female' ? 'selected' : '' }}>Female</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>

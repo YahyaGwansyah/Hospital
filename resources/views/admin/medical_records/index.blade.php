@@ -21,8 +21,8 @@
             @foreach ($medical_records as $record)
                 <tr>
                     <td>{{ $record->id }}</td>
-                    <td>{{ $record->patient->user->name }}</td>
-                    <td>{{ $record->doctor->user->name }}</td>
+                    <td>{{ $record->patient->name }}</td>
+                    <td>{{ $record->doctor->name }}</td>
                     <td>{{ $record->diagnosis }}</td>
                     <td>{{ $record->treatment }}</td>
                     <td>

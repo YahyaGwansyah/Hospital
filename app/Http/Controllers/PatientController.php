@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -13,7 +14,7 @@ class PatientController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'admin.Patients',
+            'title' => 'Patients',
             'breadcrumbs' => [
                 // 'Category' => "#",
             ],
@@ -29,12 +30,15 @@ class PatientController extends Controller
      */
     public function create()
     {
+        $users = User::all();
         $data = [
-            'title' => 'admin.Create Patient',
+            'title' => 'Create Patient',
             'breadcrumbs' => [
+                // 'Category' => "#",
                 'Patients' => route('patients.index'),
                 'Create' => "#",
             ],
+            'users' => $users,
             'content' => 'admin.patients.create',
         ];
 
@@ -46,16 +50,18 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-
-        $data = $request->validate([
+        $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'address' => 'required',
-            'phone' => 'required',
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
             'birthdate' => 'required|date',
-            'gender' => 'required'
+            'gender' => 'required|in:male,female',
         ]);
-        Patient::create($data);
-        return redirect()->route('admin.patients.index')->with('success', 'Patient created successfully.');
+
+        Patient::create($validatedData);
+
+        return redirect()->route('patients.index')->with('success', 'Patient added successfully.');
     }
 
     /**
@@ -71,13 +77,16 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
+        $users = User::all();
         $data = [
-            'title' => 'admin.Patients',
+            'title' => 'Patients',
             'breadcrumbs' => [
-                'Patients' => route('admin.patients.index'),
+                // 'Category' => "#",
+                'Patients' => route('patients.index'),
                 'Edit' => "#",
             ],
             'patient' => $patient,
+            'users' => $users,
             'content' => 'admin.patients.edit',
         ];
 
@@ -89,13 +98,17 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        $request->validate([
-            'address' => 'required',
-            'phone' => 'required',
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
             'birthdate' => 'required|date',
-            'gender' => 'required'
+            'gender' => 'required|in:male,female',
         ]);
-        $patient->update($request->all());
+
+        $patient->update($validatedData);
+
         return redirect()->route('patients.index')->with('success', 'Patient updated successfully.');
     }
 

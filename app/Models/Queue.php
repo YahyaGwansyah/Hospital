@@ -11,19 +11,14 @@ class Queue extends Model
     use HasFactory;
 
     protected $fillable = [
-        'patient_id',
-        'doctor_id',
-        'appointment_time',
+        'appointment_id',
+        'queue_number',
         'status',
     ];
 
-    public function patient(): BelongsTo
+    public function appointment()
     {
-        return $this->belongsTo(Patient::class);
-    }
-
-    public function doctor(): BelongsTo
-    {
-        return $this->belongsTo(Doctor::class);
+        return $this->belongsTo(Appointment::class);
     }
 }
+

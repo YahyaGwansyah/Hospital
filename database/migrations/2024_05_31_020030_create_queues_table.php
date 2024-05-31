@@ -12,22 +12,19 @@ return new class extends Migration {
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('doctor_id');
-            $table->dateTime('appointment_time');
+            $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade');
+            $table->integer('queue_number');
             $table->string('status')->default('pending');
             $table->timestamps();
-
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
         });
-    }
 
+    }
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
         Schema::dropIfExists('queues');
+
     }
 };

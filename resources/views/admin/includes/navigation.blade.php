@@ -66,6 +66,11 @@
                                 class="feather icon-credit-card"></i></span><span
                             class="pcoded-mtext">Payment</span></a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('health_informations.index') }}" class="nav-link "><span class="pcoded-micon"><i
+                                class="feather icon-info"></i></span><span class="pcoded-mtext">Health
+                            Information</span></a>
+                </li>
 
             </ul>
 

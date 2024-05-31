@@ -4,7 +4,15 @@
         @csrf
         <div class="form-group">
             <label for="user_id">User ID</label>
-            <input type="text" name="user_id" class="form-control" required>
+            <select name="user_id" class="form-control" required>
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="specialization">Specialization</label>
