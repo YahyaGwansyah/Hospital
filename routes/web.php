@@ -11,10 +11,12 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('users.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/', function () {
@@ -29,12 +31,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('admin/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'admin']);
 
 });
 
+Route::middleware(['auth', 'admin'])->group(function () {
+  Route::get('admin/dashboard', [AdminController::class, 'index']);
+  Route::get('/admin/doctors', [DoctorController::class, 'index'])->name('admin/doctors');
+});
+
 Route::middleware(['auth'])->group(function () {
-    Route::resource('users', RegisteredUserController::class);
+    Route::resource('users', AdminController::class);
     Route::resource('patients', PatientController::class);
     Route::resource('doctors', DoctorController::class);
     Route::resource('rooms', RoomController::class);
@@ -42,9 +49,24 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('queues', QueueController::class);
     Route::resource('medical_records', MedicalRecordController::class);
     Route::resource('payments', PaymentController::class);
+    Route::resource('schedules', ScheduleController::class);
+
 });
 
+Route::get('/doctor/lists', [App\Http\Controllers\DoctorController::class, 'index'])->name('/doctor/lists');
+// Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
 
+// Route::get('/doctor', [App\Http\Controllers\DoctorController::class, 'index']);
+
+// Route::get('/doctor', [App\Http\Controllers\DoctorController::class, 'create']);
+
+// Route::post('/doctor', [App\Http\Controllers\DoctorController::class, 'store']);
+
+// Route::get('/doctor/{id}/edit', [App\Http\Controllers\DoctorController::class, 'edit'])->name('editDoctor');
+
+// Route::post('/doctor/{id}/edit', [App\Http\Controllers\DoctorController::class, 'update'])->name('updateDoctor');
+
+// Route::get('/doctor/{id}/delete', [App\Http\Controllers\DoctorController::class, 'destroy'])->name('deleteDoctor');
 
 require __DIR__ . '/auth.php';
 

@@ -38,7 +38,7 @@ class RoomController extends Controller
             'content' => 'admin.rooms.create',
         ];
 
-        return view("admin.wrapper", $data);
+        return view("admin.includes.home", $data);
     }
 
     /**

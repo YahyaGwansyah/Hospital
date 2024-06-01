@@ -12,14 +12,13 @@ return new class extends Migration {
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('doctor_id');
-            $table->dateTime('appointment_time');
-            $table->string('status')->default('pending');
-            $table->timestamps();
-
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+            // $table->unsignedBigInteger('patient_id');
+            // $table->unsignedBigInteger('doctor_id');
+            // $table->dateTime('appointment_time');
+            // $table->string('status')->default('pending');
+            // $table->timestamps();
+            // $table->foreign('patient_id')->references('patients')->on('patients')->onDelete('cascade');
+            // $table->foreign('doctor_id')->references('doctors')->on('doctors')->onDelete('cascade');
         });
     }
 

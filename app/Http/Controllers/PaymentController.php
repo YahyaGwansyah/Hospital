@@ -38,7 +38,7 @@ class PaymentController extends Controller
             'content' => 'admin.payments.create',
         ];
 
-        return view("admin.wrapper", $data);
+        return view("admin.includes.home", $data);
     }
 
     /**

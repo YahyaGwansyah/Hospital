@@ -13,16 +13,16 @@ class MedicalRecord extends Model
         'patient_id',
         'doctor_id',
         'diagnosis',
-        'treatment'
+        'treatment',
     ];
 
-    public function patient()
-    {
-        return $this->belongsTo(Patient::class);
-    }
+    // public function patient()
+    // {
+    //     return $this->belongsTo(Patient::class);
+    // }
 
-    public function doctor()
-    {
-        return $this->belongsTo(Doctor::class);
-    }
+    // public function doctor()
+    // {
+    //     return $this->belongsTo(Doctor::class);
+    // }
 }
