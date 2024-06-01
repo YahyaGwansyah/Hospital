@@ -19,9 +19,16 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'address',
         'password',
     ];
 
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
