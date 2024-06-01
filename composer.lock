@@ -4,7 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+
     "content-hash": "320577053fc6e73a9822ff3286a4ff2a",
+
     "packages": [
         {
             "name": "brick/math",
@@ -6474,7 +6476,9 @@
                 "issues": "https://github.com/laravel/breeze/issues",
                 "source": "https://github.com/laravel/breeze"
             },
+
             "time": "2024-05-28T15:37:59+00:00"
+
         },
         {
             "name": "laravel/pint",
