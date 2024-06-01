@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('room_number')->unique();
-            $table->enum('room_type', ['ICU', 'General', 'VIP']);
-            $table->enum('availability', ['available', 'occupied', 'maintenance']);
-            $table->integer('capacity');
+            // $table->string('room_number')->unique();
+            // $table->enum('room_type', ['ICU', 'General', 'VIP']);
+            // $table->enum('availability', ['available', 'occupied', 'maintenance']);
+            // $table->integer('capacity');
             $table->timestamps();
         });
     }

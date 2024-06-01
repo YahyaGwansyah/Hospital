@@ -1,4 +1,41 @@
+<x-app-layout>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+
+    @include('admin.includes.css')
+
+
+</head>
+
+<body class="">
+    <!-- [ Pre-loader ] start -->
+    <!-- <div class="loader-bg">
+		<div class="loader-track">
+			<div class="loader-fill"></div>
+		</div>
+	</div> -->
+    <!-- [ Pre-loader ] End -->
+    <!-- [ navigation menu ] start -->
+    @include('admin.includes.sidebar')
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    <!-- @include('admin.includes.navbar') -->
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <!-- @include('admin.includes.breadcrumb') -->
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Body Content ] start -->
+            @yield('content')
+            <!-- [ Body Content ] end -->
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
     <!-- Warning Section start -->
     <!-- Older IE warning message -->
     <!--[if lt IE 11]>
@@ -46,19 +83,8 @@
     <![endif]-->
     <!-- Warning Section Ends -->
 
-    <!-- Required Js -->
-    <script src="{{ asset('adminn/dist/assets/js/vendor-all.min.js') }}"></script>
-    <script src="{{ asset('adminn/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('adminn/dist/assets/js/pcoded.min.js') }}"></script>
-    {{ asset('adminn/dist/assets/js/pages/dashboard-main.js') }}
-<!-- Apex Chart -->
-
-<script src="{{ asset('adminn/dist/assets/js/plugins/apexcharts.min.js') }}"></script>
-
-
-<!-- custom-chart js -->
-<script src="{{ asset('adminn/dist/assets/js/pages/dashboard-main.js') }}"></script>
-
+    @include('admin.includes.script')
 </body>
 
 </html>
+</x-app-layout>

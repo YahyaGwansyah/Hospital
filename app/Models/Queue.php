@@ -17,13 +17,13 @@ class Queue extends Model
         'status',
     ];
 
-    public function patient(): BelongsTo
-    {
-        return $this->belongsTo(Patient::class);
-    }
+    // public function patient(): BelongsTo
+    // {
+    //     return $this->belongsTo(Patient::class);
+    // }
 
-    public function doctor(): BelongsTo
-    {
-        return $this->belongsTo(Doctor::class);
-    }
+    // public function doctor(): BelongsTo
+    // {
+    //     return $this->belongsTo(Doctor::class);
+    // }
 }

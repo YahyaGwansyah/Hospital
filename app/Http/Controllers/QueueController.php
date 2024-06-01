@@ -21,7 +21,7 @@ class QueueController extends Controller
             'content' => 'admin.queues.index',
         ];
 
-        return view("admin.wrapper", $data);
+        return view("admin.includes.home", $data);
     }
 
     /**

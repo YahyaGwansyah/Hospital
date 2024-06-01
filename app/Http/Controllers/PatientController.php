@@ -12,16 +12,16 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $data = [
-            'title' => 'admin.Patients',
-            'breadcrumbs' => [
-                // 'Category' => "#",
-            ],
-            'patients' => Patient::all(),
-            'content' => 'admin.patients.index',
-        ];
+        // $data = [
+        //     'title' => 'admin.Patients',
+        //     'breadcrumbs' => [
+        //         // 'Category' => "#",
+        //     ],
+        //     'patients' => Patient::all(),
+        //     'content' => 'admin.patients.index',
+        // ];
 
-        return view("admin.wrapper", $data);
+        // return view("admin.includes.home", $data);
     }
 
     /**

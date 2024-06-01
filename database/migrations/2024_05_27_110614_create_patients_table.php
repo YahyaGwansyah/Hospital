@@ -12,11 +12,11 @@ return new class extends Migration {
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('address');
-            $table->string('phone');
-            $table->date('birthdate');
-            $table->enum('gender', ['male', 'female']);
+            // $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
+            // $table->string('address');
+            // $table->string('phone');
+            // $table->date('birthdate');
+            // $table->enum('gender', ['male', 'female']);
             $table->timestamps();
         });
     }

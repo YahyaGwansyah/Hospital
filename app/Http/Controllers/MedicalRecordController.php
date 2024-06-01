@@ -12,16 +12,16 @@ class MedicalRecordController extends Controller
      */
     public function index()
     {
-        $data = [
-            'title' => 'admin.medical_records.index',
-            'breadcrumbs' => [
-                // 'Category' => "#",
-            ],
-            'medical_records' => MedicalRecord::all(),
-            'content' => 'admin.medical_records.index',
-        ];
+        // $data = [
+        //     'title' => 'admin.medical_records.index',
+        //     'breadcrumbs' => [
+        //         // 'Category' => "#",
+        //     ],
+        //     'medical_records' => MedicalRecord::all(),
+        //     'content' => 'admin.medical_records.index',
+        // ];
 
-        return view("admin.wrapper", $data);
+        // return view("admin.includes.home", $data);
     }
 
     /**

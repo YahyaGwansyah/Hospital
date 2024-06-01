@@ -14,21 +14,21 @@ class Appointment extends Model
         'doctor_id',
         'room_id',
         'appointment_date',
-        'status'
+        'status',
     ];
 
-    public function patient()
-    {
-        return $this->belongsTo(Patient::class);
-    }
+    // public function patient()
+    // {
+    //     return $this->belongsTo(Patient::class);
+    // }
 
-    public function doctor()
-    {
-        return $this->belongsTo(Doctor::class);
-    }
+    // public function doctor()
+    // {
+    //     return $this->belongsTo(Doctor::class);
+    // }
 
-    public function room()
-    {
-        return $this->belongsTo(Room::class);
-    }
+    // public function room()
+    // {
+    //     return $this->belongsTo(Room::class);
+    // }
 }

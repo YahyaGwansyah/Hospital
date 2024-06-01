@@ -13,11 +13,11 @@ class Room extends Model
         'room_number',
         'room_type',
         'availability',
-        'capacity'
+        'capacity',
     ];
 
-    public function appointments()
-    {
-        return $this->hasMany(Appointment::class);
-    }
+    // public function appointments()
+    // {
+    //     return $this->hasMany(Appointment::class);
+    // }
 }

@@ -13,7 +13,7 @@ class Payment extends Model
         'patient_id',
         'amount',
         'payment_date',
-        'status'
+        'status',
     ];
 
     public function patient()

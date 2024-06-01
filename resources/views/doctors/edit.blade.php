@@ -1,6 +1,7 @@
 <!-- resources/views/doctors/edit.blade.php -->
 
-@extends('layouts.app')
+@extends('admin.includes.home')
+@section('content')
 
 
 <div class="container">
@@ -29,3 +30,4 @@
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>
+@endsection
