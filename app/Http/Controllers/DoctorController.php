@@ -5,6 +5,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use App\Models\Doctor;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
@@ -15,8 +16,16 @@ class DoctorController extends Controller
      */
     public function index(): View
     {
-        $doctors = Doctor::get(); // Load doctors with their users
-        return view('doctors.index', compact('doctors'));
+        $data = [
+            'title' => 'Doctors',
+            'breadcrumbs' => [
+                // 'Category' => "#",
+            ],
+            'doctors' => Doctor::all(),
+            'content' => 'admin.doctors.index',
+        ];
+
+        return view("admin.wrapper", $data);
     }
 
     /**
@@ -24,7 +33,18 @@ class DoctorController extends Controller
      */
     public function create(): View
     {
-        return view('doctors.create');
+        $users = User::all();
+        $data = [
+            'title' => 'Create Doctor',
+            'breadcrumbs' => [
+                'Doctors' => route('doctors.index'),
+                'Create' => "#",
+            ],
+            'users' => $users,
+            'content' => 'admin.doctors.create',
+        ];
+
+        return view("admin.wrapper", $data);
     }
 
     /**
@@ -32,22 +52,17 @@ class DoctorController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'doctor_name' => 'required|min:5', // Ensure user_id exists in users table
-            'specialization' => 'required|min:5',
-            'phone' => 'required|integer',
-            'available_times' => 'required|min:5',
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'name' => 'required|string|max:255',
+            'specialization' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'available_times' => 'required|string|max:255',
         ]);
 
-        Doctor::create([
-            'doctor_name' => $request->input('doctor_name'),
-            'specialization' => $request->input('specialization'),
-            'phone' => $request->input('phone'),
-            'available_times' => $request->input('available_times'),
-        ]);
+        Doctor::create($validatedData);
 
-        return redirect(route('doctors.index'))->with('success', 'Data Berhasil Di simpan');
-
+        return redirect()->route('doctors.index')->with('success', 'Doctor added successfully.');
     }
 
     /**
@@ -65,15 +80,17 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        // $data = [
-        //     'title' => 'admin.Doctor Edit',
-        //     'breadcrumbs' => [
-        //         'Doctor' => route('admin.doctors.index'),
-        //         'Edit' => "#",
-        //     ],
-        //     'doctor' => $doctor,
-        //     'content' => 'admin.doctors.edit',
-        // ];
+        $users = User::all();
+        $data = [
+            'title' => 'Edit Doctor',
+            'breadcrumbs' => [
+                'Doctors' => route('doctors.index'),
+                'Edit' => "#",
+            ],
+            'doctor' => $doctor,
+            'users' => $users,
+            'content' => 'admin.doctors.edit',
+        ];
 
         // return view("admin.wrapper", $data);
     }
@@ -83,12 +100,15 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        $request->validate([
-            'specialization' => 'required',
-            'phone' => 'required',
-            'available_times' => 'required'
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'specialization' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'available_times' => 'required|string|max:255',
         ]);
-        $doctor->update($request->all());
+
+        $doctor->update($validatedData);
+
         return redirect()->route('doctors.index')->with('success', 'Doctor updated successfully.');
     }
 
@@ -101,4 +121,3 @@ class DoctorController extends Controller
         return redirect()->route('doctors.index')->with('success', 'Doctor deleted successfully.');
     }
 }
-

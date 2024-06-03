@@ -37,5 +37,13 @@ class DatabaseSeeder extends Seeder
             'usertype' => 'doctor'
         ]);
 
+        $this->call([
+            PatientSeeder::class,
+            DoctorSeeder::class,
+            RoomSeeder::class,
+            AppointmentSeeder::class
+        ]);
+
+
     }
 }

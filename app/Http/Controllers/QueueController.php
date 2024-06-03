@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Queue;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class QueueController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'admin.Queues',
+            'title' => 'Queues',
             'breadcrumbs' => [
                 // 'Category' => "#",
             ],
@@ -29,12 +30,14 @@ class QueueController extends Controller
      */
     public function create()
     {
+        $appointments = Appointment::all();
         $data = [
-            'title' => 'admin.Create Queue',
+            'title' => 'Create Queue',
             'breadcrumbs' => [
                 'Queues' => route('queues.index'),
                 'Create' => "#",
             ],
+            'appointments' => $appointments,
             'content' => 'admin.queues.create',
         ];
 
@@ -47,9 +50,8 @@ class QueueController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'doctor_id' => 'required|exists:doctors,id',
-            'appointment_time' => 'required|date',
+            'appointment_id' => 'required|exists:appointments,id',
+            'queue_number' => 'required|integer',
             'status' => 'required|in:pending,confirmed,completed,cancelled',
         ]);
 
@@ -71,13 +73,15 @@ class QueueController extends Controller
      */
     public function edit(Queue $queue)
     {
+        $appointments = Appointment::all();
         $data = [
-            'title' => 'admin.Queues',
+            'title' => 'Edit Queue',
             'breadcrumbs' => [
-                'Queues' => route('admin.queues.index'),
+                'Queues' => route('queues.index'),
                 'Edit' => "#",
             ],
             'queue' => $queue,
+            'appointments' => $appointments,
             'content' => 'admin.queues.edit',
         ];
 
@@ -90,15 +94,15 @@ class QueueController extends Controller
     public function update(Request $request, Queue $queue)
     {
         $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'doctor_id' => 'required|exists:doctors,id',
-            'appointment_time' => 'required|date',
+            'appointment_id' => 'required|exists:appointments,id',
+            'queue_number' => 'required|integer',
             'status' => 'required|in:pending,confirmed,completed,cancelled',
         ]);
 
         $queue->update($request->all());
 
-        return redirect()->route('queues.index')->with('success', 'Queue updated successfully.');
+        return redirect()->route('queues.index')
+            ->with('success', 'Queue updated successfully.');
     }
 
     /**
