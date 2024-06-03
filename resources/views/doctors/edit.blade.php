@@ -1,9 +1,3 @@
-<!-- resources/views/doctors/edit.blade.php -->
-
-@extends('admin.includes.home')
-@section('content')
-
-
 <div class="container">
     <h1>Edit Doctor</h1>
     <form action="{{ route('doctors.update', $doctor->id) }}" method="POST">
@@ -11,7 +5,12 @@
         @method('PUT')
         <div class="form-group">
             <label for="user_id">User ID</label>
-            <input type="text" name="user_id" class="form-control" value="{{ $doctor->user_id }}" required>
+            <select name="user_id" class="form-control" required>
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}" {{ $doctor->user_id == $user->id ? 'selected' : '' }}>
+                        {{ $user->name }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="specialization">Specialization</label>
@@ -29,5 +28,4 @@
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
-</div>
-@endsection
+    </Link>

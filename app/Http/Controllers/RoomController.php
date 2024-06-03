@@ -13,7 +13,7 @@ class RoomController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'admin.Rooms',
+            'title' => 'Room',
             'breadcrumbs' => [
                 // 'Category' => "#",
             ],
@@ -30,7 +30,7 @@ class RoomController extends Controller
     public function create()
     {
         $data = [
-            'title' => 'admin.Create room',
+            'title' => 'Create room',
             'breadcrumbs' => [
                 'rooms' => route('rooms.index'),
                 'Create' => "#",
@@ -70,7 +70,7 @@ class RoomController extends Controller
     public function edit(Room $room)
     {
         $data = [
-            'title' => 'admin.Rooms',
+            'title' => 'Rooms',
             'breadcrumbs' => [
                 'Rooms' => route('admin.rooms.index'),
                 'Edit' => "#",

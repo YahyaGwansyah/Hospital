@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\MedicalRecord;
 use Illuminate\Http\Request;
+use App\Models\Doctor;
+use App\Models\Patient;
 
 class MedicalRecordController extends Controller
 {
@@ -12,14 +14,14 @@ class MedicalRecordController extends Controller
      */
     public function index()
     {
-        // $data = [
-        //     'title' => 'admin.medical_records.index',
-        //     'breadcrumbs' => [
-        //         // 'Category' => "#",
-        //     ],
-        //     'medical_records' => MedicalRecord::all(),
-        //     'content' => 'admin.medical_records.index',
-        // ];
+        $data = [
+            'title' => 'Medical_Records',
+            'breadcrumbs' => [
+                // 'Category' => "#",
+            ],
+            'medical_records' => MedicalRecord::all(),
+            'content' => 'admin.medical_records.index',
+        ];
 
         // return view("admin.includes.home", $data);
     }
@@ -29,12 +31,17 @@ class MedicalRecordController extends Controller
      */
     public function create()
     {
+        $patients = Patient::all();
+        $doctors = Doctor::all();
         $data = [
-            'title' => 'admin.Create MedicalRecord',
+            'title' => 'Create Medical Record',
             'breadcrumbs' => [
-                'MedicalRecord' => route('admin.medical_records.index'),
+                // 'Category' => "#",
+                'Medical_Records' => route('medical_records.index'),
                 'Create' => "#",
             ],
+            'patients' => $patients,
+            'doctors' => $doctors,
             'content' => 'admin.medical_records.create',
         ];
 
@@ -69,14 +76,19 @@ class MedicalRecordController extends Controller
      */
     public function edit(MedicalRecord $medicalRecord)
     {
+        $patients = Patient::all();
+        $doctors = Doctor::all();
+
         $data = [
-            'title' => 'admin.MedicalRecord Edit',
+            'title' => 'Edit MedicalRecord',
             'breadcrumbs' => [
-                'MedicalRecord' => route('admin.medical_records.index'),
+                'Medical Records' => route('medical_records.index'),
                 'Edit' => "#",
             ],
-            'medical_record' => $medicalRecord,
-            'content' => 'admin.patients.edit',
+            'medicalRecord' => $medicalRecord,
+            'patients' => $patients,
+            'doctors' => $doctors,
+            'content' => 'admin.medical_records.edit',
         ];
 
         return view("admin.wrapper", $data);

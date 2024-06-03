@@ -6,18 +6,20 @@
             <label for="patient_id">Patient</label>
             <select name="patient_id" class="form-control" required>
                 @foreach ($patients as $patient)
-                    <option value="{{ $patient->id }}">{{ $patient->user->name }}</option>
+                    <option value="{{ $patient->id }}">{{ $patient->name }}</option>
                 @endforeach
             </select>
         </div>
+
         <div class="form-group">
             <label for="doctor_id">Doctor</label>
             <select name="doctor_id" class="form-control" required>
                 @foreach ($doctors as $doctor)
-                    <option value="{{ $doctor->id }}">{{ $doctor->user->name }}</option>
+                    <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
                 @endforeach
             </select>
         </div>
+
         <div class="form-group">
             <label for="diagnosis">Diagnosis</label>
             <textarea name="diagnosis" class="form-control" required></textarea>
