@@ -19,6 +19,8 @@
         <!-- end slider section -->
     </div>
 
+    
+
     <!-- book section -->
 
     @include('home.book')

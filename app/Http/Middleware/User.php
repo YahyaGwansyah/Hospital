@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 class User
 {
     /**
@@ -16,10 +15,22 @@ class User
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->usertype != 'user') {
-            Session::flash('success', 'Successfully');
-            return redirect('dashboard');
-        } 
-        return $next($request);
+        if(!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $userType = Auth::user()->usertype;
+
+        if($userType == 'admin') {
+            return redirect()->route('admin/dashboard');
+        }
+     
+        elseif($userType == 'user') {
+            return $next($request);
+        }
+
+        if($userType == 'doctor') {
+            return redirect()->route('doctor/dashboard');
+        }
     }
 }

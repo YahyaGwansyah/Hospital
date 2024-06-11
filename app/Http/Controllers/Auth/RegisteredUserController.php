@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Alert;
 
 class RegisteredUserController extends Controller
 {
@@ -38,13 +39,14 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
-        toastr()->success('Log in is Successfully!');
+
         return redirect(route('dashboard', absolute: false));
     }
 }

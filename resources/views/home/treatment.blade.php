@@ -1,6 +1,6 @@
 <section class="treatment_section layout_padding">
     <div class="side_img">
-        <img src="images/treatment-side-img.jpg" alt="">
+        <img src="{{asset('images/treatment-side-img.jpg')}}" alt="">
     </div>
     <div class="container">
         <div class="heading_container heading_center">
@@ -12,7 +12,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="box ">
                     <div class="img-box">
-                        <img src="images/t1.png" alt="">
+                        <img src="{{asset('images/t1.png')}}" alt="">
                     </div>
                     <div class="detail-box">
                         <h4>
@@ -31,7 +31,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="box ">
                     <div class="img-box">
-                        <img src="images/t2.png" alt="">
+                        <img src="{{asset('images/t2.png')}}" alt="">
                     </div>
                     <div class="detail-box">
                         <h4>
@@ -50,7 +50,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="box ">
                     <div class="img-box">
-                        <img src="images/t3.png" alt="">
+                        <img src="{{asset('images/t3.png')}}" alt="">
                     </div>
                     <div class="detail-box">
                         <h4>
@@ -69,7 +69,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="box ">
                     <div class="img-box">
-                        <img src="images/t4.png" alt="">
+                        <img src="{{asset('images/t4.png')}}" alt="">
                     </div>
                     <div class="detail-box">
                         <h4>

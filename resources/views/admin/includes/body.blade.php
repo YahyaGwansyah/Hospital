@@ -360,7 +360,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div> 
             <!-- prject ,team member start -->
             <!-- seo start -->
             <!-- <div class="col-xl-4 col-md-12">

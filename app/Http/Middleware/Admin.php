@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -19,10 +18,22 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->usertype != 'admin') {
-            Session::flash('success', 'Successfully');
-            return redirect('admin/dashboard');
-        } 
-        return $next($request);
+        if(!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $userType = Auth::user()->usertype;
+
+        if($userType == 'admin') {
+            return $next($request);
+        }
+
+        if($userType == 'doctor') {
+            return redirect()->route('doctor/dashboard');
+        }
+     
+        elseif($userType == 'user') {
+            return redirect()->route('dashboard');
+        }
     }
 }

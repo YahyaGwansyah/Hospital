@@ -5,8 +5,7 @@
 			<a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
 			<a href="#!" class="b-brand">
 				<!-- ========   change your logo hear   ============ -->
-				<img src="assets/images/logo.png" alt="" class="logo">
-				<img src="assets/images/logo-icon.png" alt="" class="logo-thumb">
+				<img src="{{asset('adminn/dist/assets/images/logo-old.png')}}" alt="" class="logo">
 			</a>
 			<a href="#!" class="mob-toggler">
 				<i class="feather icon-more-vertical"></i>
@@ -172,11 +171,12 @@
 									<i class="feather icon-log-out"></i>
 								</a>
 							</div>
-							<!-- <ul class="pro-body">
-								<li><a href="route('profile.edit')" class="dropdown-item"><i class="feather icon-user"></i>{{ __('Profile') }}</a></li>
-								<li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
-								<li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
-							</ul> -->
+							<ul class="pro-body">
+								<li><a href="{{ route('profile.edit') }}" :active="request()->routeIs('profile.edit')" class="dropdown-item"><i class="feather icon-user"></i>{{ __('Profile') }}</a></li>
+								<!-- <li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
+								<li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li> -->
+								<li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-settings"></i> Setting</a></li>
+							</ul>
 						</div>
 					</div>
 				</li>
@@ -185,3 +185,4 @@
 
 
 	</header>
+	@include('admin.includes.script')

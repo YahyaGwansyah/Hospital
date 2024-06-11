@@ -7,18 +7,18 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
 
-    // public function index()
-    // {
-    //     $data = [
-    //         'title' => 'Dashboard',
-    //         'breadcrumbs' => [
-    //             // 'Category' => "#",
-    //         ],
-    //         // 'defaultCategories' => $defaultCategories,
-    //         // 'customCategories' => $customCategories,
-    //         'content' => 'dashboard.index',
-    //     ];
+    public function index()
+    {
+        $data = [
+            'title' => 'Dashboard',
+            'breadcrumbs' => [
+                // 'Category' => "#",
+            ],
+            // 'defaultCategories' => $defaultCategories,
+            // 'customCategories' => $customCategories,
+            'content' => 'index',
+        ];
 
-    //     return view("admin.dashboard.index", $data);
-    // }
+        return view("users.index", $data);
+    }
 }

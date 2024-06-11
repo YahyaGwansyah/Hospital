@@ -1,4 +1,5 @@
 <!-- Basic -->
+<title>Hospital</title>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- Mobile Metas -->
@@ -7,10 +8,6 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-
-<title>hospital</title>
-
-
 <!-- bootstrap core css -->
 <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
 
@@ -22,7 +19,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
 <!-- font awesome style -->
-<link href="css/font-awesome.min.css" rel="stylesheet" />
+<link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" />
 <!-- nice select -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css"
     integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
@@ -32,3 +29,5 @@
 <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
 <!-- responsive style -->
 <link href="{{ asset('css/responsive.css') }}" rel="stylesheet" />
+
+

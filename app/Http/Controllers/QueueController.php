@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Queue;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 
 class QueueController extends Controller
@@ -12,33 +13,20 @@ class QueueController extends Controller
      */
     public function index()
     {
-        $data = [
-            'title' => 'admin.Queues',
-            'breadcrumbs' => [
-                // 'Category' => "#",
-            ],
-            'queues' => Queue::all(),
-            'content' => 'admin.queues.index',
-        ];
-
-        return view("admin.includes.home", $data);
+        $queues = Queue::latest()->paginate(5);
+        return view('admin.queues.index', compact('queues'));
     }
+
+    
+    
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $data = [
-            'title' => 'admin.Create Queue',
-            'breadcrumbs' => [
-                'Queues' => route('queues.index'),
-                'Create' => "#",
-            ],
-            'content' => 'admin.queues.create',
-        ];
-
-        return view("admin.wrapper", $data);
+        $appointments = Appointment::all();
+        return view('admin.queues.create', compact('appointments'));
     }
 
     /**
@@ -47,16 +35,17 @@ class QueueController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'doctor_id' => 'required|exists:doctors,id',
-            'appointment_time' => 'required|date',
+            'appointment_id' => 'required|exists:appointments,id',
+            'queue_number' => 'required|integer',
             'status' => 'required|in:pending,confirmed,completed,cancelled',
         ]);
 
         Queue::create($request->all());
 
-        return redirect()->route('queues.index')->with('success', 'Queue created successfully.');
+        return redirect()->route('admin/queues')->with('success', 'Queue created successfully.');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -69,45 +58,44 @@ class QueueController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Queue $queue)
+    public function edit(string $id)
     {
-        $data = [
-            'title' => 'admin.Queues',
-            'breadcrumbs' => [
-                'Queues' => route('admin.queues.index'),
-                'Edit' => "#",
-            ],
-            'queue' => $queue,
-            'content' => 'admin.queues.edit',
-        ];
-
-        return view("admin.wrapper", $data);
+        $appointments = Appointment::all();
+        $queue = Queue::findOrFail($id);
+        return view('admin.queues.update', compact('queue', 'appointments'));
     }
+
+    
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Queue $queue)
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'doctor_id' => 'required|exists:doctors,id',
-            'appointment_time' => 'required|date',
+            'appointment_id' => 'required|exists:appointments,id',
+            'queue_number' => 'required|integer',
             'status' => 'required|in:pending,confirmed,completed,cancelled',
         ]);
 
+        $queue = Queue::findOrFail($id);
         $queue->update($request->all());
 
-        return redirect()->route('queues.index')->with('success', 'Queue updated successfully.');
+        return redirect()->route('admin/queues')->with('success', 'Queue updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Queue $queue)
-    {
-        $queue->delete();
 
-        return redirect()->route('queues.index')->with('success', 'Queue deleted successfully.');
+    public function delete($id)
+    {
+        $queues = Queue::findOrFail($id)->delete();
+        if($queues) {
+            return redirect()->route('admin/queues')->with('success', 'Queue Data Was Deleted');
+        } else {
+            return redirect()->route('admin/queues')->with('error', 'Queue Delete Fail');
+        }
     }
 }

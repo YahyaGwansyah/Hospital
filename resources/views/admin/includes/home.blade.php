@@ -1,29 +1,30 @@
-<x-app-layout>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
 
+  
+    @yield('csstable')
     @include('admin.includes.css')
-
-
 </head>
 
 <body class="">
+
     <!-- [ Pre-loader ] start -->
-    <!-- <div class="loader-bg">
+    <div class="loader-bg">
 		<div class="loader-track">
 			<div class="loader-fill"></div>
 		</div>
-	</div> -->
+	</div>
+    
+
     <!-- [ Pre-loader ] End -->
     <!-- [ navigation menu ] start -->
+ 
+    @include('admin.includes.navbar')
     @include('admin.includes.sidebar')
-    <!-- [ navigation menu ] end -->
-    <!-- [ Header ] start -->
-    <!-- @include('admin.includes.navbar') -->
-
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-content">
@@ -32,6 +33,7 @@
             <!-- [ breadcrumb ] end -->
             <!-- [ Body Content ] start -->
             @yield('content')
+            @include('admin.includes.script')
             <!-- [ Body Content ] end -->
         </div>
     </div>
@@ -82,9 +84,9 @@
         </div>
     <![endif]-->
     <!-- Warning Section Ends -->
-
     @include('admin.includes.script')
+    @yield('jstable')
+    @include ('sweetalert::alert')
+  
 </body>
-
 </html>
-</x-app-layout>

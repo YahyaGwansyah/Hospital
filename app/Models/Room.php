@@ -11,13 +11,13 @@ class Room extends Model
 
     protected $fillable = [
         'room_number',
-        'room_type',
-        'availability',
-        'capacity',
+        'room_type',   
+        'availability', 
+        'capacity',      
     ];
 
-    // public function appointments()
-    // {
-    //     return $this->hasMany(Appointment::class);
-    // }
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

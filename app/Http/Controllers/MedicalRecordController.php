@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\MedicalRecord;
+use App\Models\Doctor;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class MedicalRecordController extends Controller
@@ -12,16 +14,8 @@ class MedicalRecordController extends Controller
      */
     public function index()
     {
-        // $data = [
-        //     'title' => 'admin.medical_records.index',
-        //     'breadcrumbs' => [
-        //         // 'Category' => "#",
-        //     ],
-        //     'medical_records' => MedicalRecord::all(),
-        //     'content' => 'admin.medical_records.index',
-        // ];
-
-        // return view("admin.includes.home", $data);
+        $medical_records = MedicalRecord::latest()->paginate(5);
+        return view('admin.medical_records.index', compact('medical_records'));
     }
 
     /**
@@ -29,16 +23,9 @@ class MedicalRecordController extends Controller
      */
     public function create()
     {
-        $data = [
-            'title' => 'admin.Create MedicalRecord',
-            'breadcrumbs' => [
-                'MedicalRecord' => route('admin.medical_records.index'),
-                'Create' => "#",
-            ],
-            'content' => 'admin.medical_records.create',
-        ];
-
-        return view("admin.wrapper", $data);
+        $doctors = Doctor::all();
+        $patients = Patient::all();
+        return view('admin.medical_records.create', compact('doctors', 'patients'));
     }
 
     /**
@@ -67,19 +54,12 @@ class MedicalRecordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MedicalRecord $medicalRecord)
+    public function edit(string $id)
     {
-        $data = [
-            'title' => 'admin.MedicalRecord Edit',
-            'breadcrumbs' => [
-                'MedicalRecord' => route('admin.medical_records.index'),
-                'Edit' => "#",
-            ],
-            'medical_record' => $medicalRecord,
-            'content' => 'admin.patients.edit',
-        ];
-
-        return view("admin.wrapper", $data);
+        $doctors = Doctor::all();
+        $patients = Patient::all();
+        $record = MedicalRecord::findOrFail($id);
+        return view('admin.medical_records.update', compact('record', 'doctors', 'patients'));
     }
 
 
@@ -87,22 +67,27 @@ class MedicalRecordController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MedicalRecord $medicalRecord)
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'diagnosis' => 'required',
             'treatment' => 'required'
         ]);
-        $medicalRecord->update($request->all());
-        return redirect()->route('medical_records.index')->with('success', 'Medical record updated successfully.');
+        $record = MedicalRecord::findOrFail($id);
+        $record->update($request->all());
+        return redirect()->route('admin/medical_records')->with('success', 'Medical record updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MedicalRecord $medicalRecord)
+    public function delete($id)
     {
-        $medicalRecord->delete();
-        return redirect()->route('medical_records.index')->with('success', 'Medical record deleted successfully.');
+        $medical_records = MedicalRecord::findOrFail($id)->delete();
+        if($medical_records) {
+            return redirect()->route('admin/medical_records')->with('success', 'Medical record Data Was Deleted');
+        } else {
+            return redirect()->route('admin/medical_records')->with('error', 'Medical record Delete Fail');
+        }
     }
 }

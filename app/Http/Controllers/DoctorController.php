@@ -1,104 +1,105 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\View\View;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
-use App\Models\Doctor;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 
+use Illuminate\Http\Request;
+use App\Models\Doctor;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use Alert;
 class DoctorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View
     {
-        $doctors = Doctor::get(); // Load doctors with their users
-        return view('doctors.index', compact('doctors'));
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+        $doctors = Doctor::whereHas('user', function($query) {
+            $query->where('usertype', 'doctor');
+        })->get();
+        return view('admin.doctors.index', compact('doctors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
+    public function create()
     {
-        return view('doctors.create');
+        $users = User::where('usertype', 'doctor')->get();
+        return view('admin.doctors.create', compact('users'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'doctor_name' => 'required|min:5', // Ensure user_id exists in users table
-            'specialization' => 'required|min:5',
-            'phone' => 'required|integer',
-            'available_times' => 'required|min:5',
+        $validation = $request->validate([
+            'user_id' => 'required|string|exists:users,id',
+            'doctor_name' => 'required|min:5',
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
+            'specialization' => 'required|min:5', 
+            'phone' => 'required|string|min:5',      
+            'available_times' => 'required|string|min:5',         
         ]);
 
-        Doctor::create([
-            'doctor_name' => $request->input('doctor_name'),
-            'specialization' => $request->input('specialization'),
-            'phone' => $request->input('phone'),
-            'available_times' => $request->input('available_times'),
+        $image = $request->file('image');
+        $image->storeAs('public/doctors', $image->hashName());
+
+        $doctor = Doctor::create([
+            'user_id' => $request->user_id,
+            'doctor_name' => $request->doctor_name,
+            'image' => $image->hashName(),
+            'specialization' => $request->specialization,
+            'phone' => $request->phone,
+            'available_times' => $request->available_times
         ]);
 
-        return redirect(route('doctors.index'))->with('success', 'Data Berhasil Di simpan');
-
+        if ($doctor) {
+            return redirect()->route('admin/doctors')->with('success', 'Doctor Data Was Added');
+        } else {
+            return redirect()->route('admin/doctors/create')->with('error', 'Some Problem Occurred');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Doctor $doctor, $id): View
+    public function edit($id)
     {
         $doctor = Doctor::findOrFail($id);
-
-        return view('doctors.show', compact('doctor'));
+        $users = User::where('usertype', 'doctor')->get();
+        return view('admin.doctors.update', compact('doctor', 'users'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Doctor $doctor)
-    {
-        // $data = [
-        //     'title' => 'admin.Doctor Edit',
-        //     'breadcrumbs' => [
-        //         'Doctor' => route('admin.doctors.index'),
-        //         'Edit' => "#",
-        //     ],
-        //     'doctor' => $doctor,
-        //     'content' => 'admin.doctors.edit',
-        // ];
+    public function update(Request $request, $id)
+{
+    $doctor = Doctor::findOrFail($id);
 
-        // return view("admin.wrapper", $data);
+    $request->validate([
+        'doctor_name' => 'required|min:5',
+        'specialization' => 'required|min:5',
+        'phone' => 'required|string|min:5',
+        'available_times' => 'required|string|min:5',
+        'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+    ]);
+
+    $doctor->update([
+        'doctor_name' => $request->doctor_name,
+        'specialization' => $request->specialization,
+        'phone' => $request->phone,
+        'available_times' => $request->available_times,
+    ]);
+
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $image->storeAs('public/doctors', $image->hashName());
+        $doctor->update(['image' => $image->hashName()]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Doctor $doctor)
-    {
-        $request->validate([
-            'specialization' => 'required',
-            'phone' => 'required',
-            'available_times' => 'required'
-        ]);
-        $doctor->update($request->all());
-        return redirect()->route('doctors.index')->with('success', 'Doctor updated successfully.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Doctor $doctor)
-    {
-        $doctor->delete();
-        return redirect()->route('doctors.index')->with('success', 'Doctor deleted successfully.');
-    }
+    return redirect()->route('admin/doctors')->with('success', 'Doctor Data Was Changed');
 }
 
+
+    public function delete($id)
+    {
+        $doctor = Doctor::findOrFail($id)->delete();
+        if ($doctor) {
+            return redirect()->route('admin/doctors')->with('success', 'Doctor Was Deleted');
+        } else {
+            return redirect()->route('admin/doctors')->with('error', 'Delete Failed');
+        }
+    }
+}

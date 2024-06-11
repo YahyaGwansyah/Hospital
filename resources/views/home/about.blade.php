@@ -1,9 +1,10 @@
+
 <section class="about_section">
     <div class="container  ">
         <div class="row">
             <div class="col-md-6 ">
                 <div class="img-box">
-                    <img src="images/about-img.jpg" alt="">
+                    <img src="{{asset('images/about-img.jpg')}}" alt="">
                 </div>
             </div>
             <div class="col-md-6">

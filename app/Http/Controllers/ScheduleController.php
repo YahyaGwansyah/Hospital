@@ -1,29 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Schedule;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Alert;
 class ScheduleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): View
+    public function index()
     {
+    
+        $schedules = Schedule::latest()->paginate(5);
+
+        $schedules = Schedule::orderBy('id', 'desc')->get();
+        $schedules = Schedule::count();
         $schedules = Schedule::all();
-        return view('admin.schedules.index', [
-            'schedules' => $schedules
-        ]);
+        return view('admin.schedules.index', compact('schedules'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
+    public function create()
     {
         $doctors = \App\Models\Doctor::all();
         return view('admin.schedules.create', [
@@ -31,68 +26,59 @@ class ScheduleController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-         // validate form
-         Validator::validate($request->all(), [
-            'doctor_id' => 'required|integer',
-            'specialization' => 'required|min:5',
-            'phone' => 'required|min:5',
-            'day' => 'required|min:5',
-        ], [
-            'doctor_id.required' => 'Kode Wajid Di isi',
-            'specialization' => 'specialization Wajid Di isi',
-            'phone' => 'Nomor Hp Wajid Di isi',
+        $validation = $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+            'day_of_week' => 'required|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
         ]);
-
-        // upload image
-        $gambar = $request->file('gambar');
-        $gambar->storeAs('public/pulsas', $gambar->hashName());
-
-        Schedule::create([
-            'kode_pulsa' => $request->kode_pulsa,
-            'jenis_pulsa' => $request->jenis_pulsa,
-            'gambar' => $gambar->hashName(),
-            'harga' => $request->harga,
-            'keterangan' => $request->keterangan
-        ]);
-
-        // redirect to index
-        return redirect()->route('pulsa.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        $data = Schedule::create($validation);
+        if($data) {
+            return redirect()->route('admin/schedules')->with('success', 'Schedule Data Was Added');
+        } else {
+            return redirect()->route('admin/schedules/create')->with('error', 'Some Problem Secure');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $doctors = \App\Models\Doctor::all();
+        $schedule = Schedule::findOrFail($id);
+        return view('admin.schedules.update', [
+                'schedule' => $schedule,
+                'doctors' => $doctors
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $schedules = Schedule::findOrFail($id);
+        $doctor_id = $request->doctor_id;
+       $day_of_week = $request->day_of_week;
+       $start_time = $request->start_time;
+       $end_time = $request->end_time;
+
+        $schedules -> doctor_id = $doctor_id;
+        $schedules -> day_of_week = $day_of_week;
+        $schedules -> start_time = $start_time;
+        $schedules -> end_time = $end_time;
+        $data = $schedules->save();
+        if($data) {
+            return redirect()->route('admin/schedules')->with('success', 'Schedule Data Was Changed');
+        } else {
+            return redirect()->route('admin/schedules/update')->with('error', 'Some Problem Secure');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function delete($id)
     {
-        //
+        $schedules = Schedule::findOrFail($id)->delete();
+        if($schedules) {
+            return redirect()->route('admin/schedules')->with('success', 'Schedule Data Was Deleted');
+        } else {
+            return redirect()->route('admin/schedules')->with('error', 'Schedule Delete Fail');
+        }
     }
 }

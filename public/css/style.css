@@ -249,6 +249,7 @@ a:focus {
 
 .quote_btn-container a {
   color: #ffffff;
+  background-color: #00c6a9;
   margin-right: 25px;
   text-transform: uppercase;
 }
@@ -259,6 +260,7 @@ a:focus {
 
 .quote_btn-container a:hover {
   color: #252525;
+  background-color: #00c6a9;
 }
 
 /*end header section*/
